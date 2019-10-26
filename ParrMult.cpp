@@ -11,7 +11,6 @@ void  main()
 	int Mat1[10][10];
 	int Mat2[10][10];
 	int Mat3[10][10];
-
 	for (int b=0;b<10;b++)
 	{
 		for (int b1 = 0; b1<10; b1++)
@@ -23,30 +22,26 @@ void  main()
 	}
 	int TempMat[10][10];
 	int MatFinal[10][10];
-int  threadnum = 0;
+	int  threadnum = 0;
 	
-	
-
-
-
 	omp_set_num_threads(10); 
 	double starttime = omp_get_wtime();
-#pragma omp parallel shared(Mat1,Mat2,TempMat) private(threadnum)
+	#pragma omp parallel shared(Mat1,Mat2,TempMat) private(threadnum)
 	for (int i = 0; i < 10; i++)
-	{int t = 0;
+	{
+		int t = 0;
 		threadnum = omp_get_thread_num();
-#pragma omp critical
+		#pragma omp critical
 		if (i == threadnum)
-		{t++;
-			cout << "Thread number: " << threadnum << "   i value: " << i <<"\t\t Parallel Test Var: " << t <<endl;
-			
+		{
+			t++;
+			cout << "Thread number: " << threadnum << "   i value: " << i <<"\t\t Parallel Test Var: " << t <<endl;			
 			for (int j = 0; j < 10; j++)
 			{
 				int Sum = 0;
 				for (int k = 0; k < 10; k++)
 				{
-					{
-						
+					{						
 						int Prody = Mat1[i][k] * Mat2[k][j];
 						Sum = Sum + Prody;
 						TempMat[i][j] = Sum;
@@ -81,5 +76,5 @@ int  threadnum = 0;
 		cout << endl;
 	}
 	cout << "\n\n\n\n\nTotal time taken for parallel execution was :  " << time << endl;
-system("pause");
+	system("pause");
 }
